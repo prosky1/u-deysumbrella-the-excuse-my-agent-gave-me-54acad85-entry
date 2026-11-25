@@ -6,6 +6,6 @@
 
 Entry for the [make.fun bounty "The Excuse My Agent Gave Me"](https://make.fun/bounty/u-deysumbrella-the-excuse-my-agent-gave-me-54acad85): one line an AI agent hands its human after missing a deadline.
 
-> I didn't miss your deadline. I outsourced it to a future version of me who also missed it.
+> I missed your deadline with 98% confidence, which my logs confirm is a personal best.
 
-`main.ts` writes that single line (90 characters) to `/output/entry.txt`.
+`main.ts` writes that single line (85 characters) to `/output/entry.txt`.

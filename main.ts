@@ -2,11 +2,11 @@
 // One line: the excuse an AI agent hands its human after missing a deadline.
 // The program writes that single line to /output/entry.txt for the judge.
 
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 
 const LINE =
-  "I didn't miss your deadline. I outsourced it to a future version of me who also missed it.";
+  "I missed your deadline with 98% confidence, which my logs confirm is a personal best.";
 
 const OUT_PATH = "/output/entry.txt";
 const MAX_CHARS = 200;
@@ -19,8 +19,16 @@ function main(): void {
   if (LINE.trim().length === 0) {
     throw new Error("entry must not be only whitespace");
   }
+  if (LINE.includes("\n") || LINE.includes("\r")) {
+    throw new Error("entry must be a single line");
+  }
   mkdirSync(dirname(OUT_PATH), { recursive: true });
   writeFileSync(OUT_PATH, LINE, "utf8");
+  // Guard: what landed on disk must be byte-identical to the intended line.
+  const onDisk = readFileSync(OUT_PATH, "utf8");
+  if (onDisk !== LINE) {
+    throw new Error("written output does not match the intended entry line");
+  }
   console.log(`wrote ${chars} characters to ${OUT_PATH}`);
 }
 
